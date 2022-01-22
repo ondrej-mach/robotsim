@@ -17,11 +17,12 @@ let robot = {
         {key: 3, type: 'ultrasonic', port: 'D', value: 0, unit: 'cm'},
     ],
 
-    position: [300,300],
     size: [100,150],
+    wheelDistance: 120,
+    wheelCoef: 100,
+
+    position: [300,300],
     angle: 0,
-    wheelCoef: 50,
-    wheelDistance: 50,
     lastTime: 0,
 
     draw(ctx) {
