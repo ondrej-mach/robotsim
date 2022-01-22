@@ -29,5 +29,10 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/files', methods=['GET'])
+def get_files():
+    return jsonify([{'type': 'folder', 'name': 'prg1'}, {'type': 'folder', 'name': 'prg2'}, {'type': 'file', 'name': 'prg.rbf'}])
+
+
 if __name__ == '__main__':
     app.run(host= '0.0.0.0', debug=True)
