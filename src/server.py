@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from flask import Flask, request, jsonify, render_template
+import os
 
 app = Flask(__name__)
 
@@ -31,7 +32,17 @@ def index():
 
 @app.route('/files', methods=['GET'])
 def get_files():
-    return jsonify([{'type': 'folder', 'name': 'prg1'}, {'type': 'folder', 'name': 'prg2'}, {'type': 'file', 'name': 'prg.rbf'}])
+    path = 'fs' + request.args.get('path')
+    files = []
+    dirs = []
+    for item in os.listdir(path):
+        if os.path.isdir(os.path.join(path, item)):
+            dirs.append({'name': item, 'type': 'folder'})
+        else:
+            files.append({'name': item, 'type': 'file'})
+    print(dirs + files)
+
+    return jsonify(dirs + files)
 
 
 if __name__ == '__main__':
