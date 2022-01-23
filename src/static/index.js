@@ -28,7 +28,13 @@ let robot = {
     draw(ctx) {
         ctx.translate(this.position[0] + this.size[0]/2, this.position[1] + this.size[0]/2);
         ctx.rotate(this.angle);
+
         ctx.fillRect(-this.size[0]/2, -this.size[1]/2, this.size[0], this.size[1]);
+        ctx.fillStyle = 'yellow';
+        ctx.fillRect(-this.size[0]/2, this.size[1]/2, this.size[0], 10);
+        ctx.fillStyle = 'red';
+        ctx.fillRect(-this.size[0]/2, -this.size[1]/2-10, this.size[0], 10);
+
         this.updatePosition()
     },
 
