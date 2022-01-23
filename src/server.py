@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+#author: xmacho12
 from flask import Flask, request, jsonify, render_template, send_from_directory
 import os
 
@@ -7,6 +8,7 @@ app = Flask(__name__)
 
 class DataStore():
     data = None
+    state = None
 
 @app.route('/json', methods=['POST'])
 def postJSON():
@@ -30,6 +32,7 @@ def index():
     return render_template('index.html')
 
 
+#author: xzmitk01
 @app.route('/files', methods=['GET'])
 def get_files():
     path = 'fs' + request.args.get('path')
@@ -62,6 +65,23 @@ def upload_file(path):
     file = request.files['file']
     file.save('fs/' + path)
     return 'Received'
+
+
+@app.route('/update', methods=['POST'])
+def update():
+    DataStore.state = request.json
+    return 'Received'
+
+
+@app.route('/sensors')
+def sensors():
+    return jsonify(DataStore.state['sensors'])
+
+
+@app.route('/location')
+def position():
+    return jsonify(DataStore.state['location'])
+
 
 
 if __name__ == '__main__':

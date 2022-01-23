@@ -1,3 +1,5 @@
+//Author: xmacho12
+
 // Get the canvas element form the page
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
@@ -115,6 +117,21 @@ function reloadSpeed(callback) {
     xhr.send();
 }
 
+function updateData() {
+    robot.sensors[0].value = [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)];
+    robot.sensors[1].value = Math.floor(Math.random() * 2);
+    robot.sensors[2].value = [Math.random() * 10, Math.random() * 10, Math.random() * 10];
+    robot.sensors[3].value = Math.floor(Math.random() * 100);
+
+    fetch(`/update`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({location: {position: robot.position, angle: robot.angle}, sensors: robot.sensors})
+  })
+}
+
 
 /* Rresize the canvas to occupy the full page,
    by getting the widow width and height and setting it to canvas*/
@@ -134,7 +151,8 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
-let interval = setInterval(() => reloadSpeed((s) => robot.setSpeed(s)), 100);
+setInterval(() => reloadSpeed((s) => robot.setSpeed(s)), 100);
+setInterval(() => updateData(), 200);
 
 window.onresize = resize;
 resize();
